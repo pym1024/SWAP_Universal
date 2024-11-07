@@ -13,7 +13,7 @@ The following instruction demonstrates the usage of evaluating network's perform
 
 * Install necessary dependencies (a new virtual environment is suggested).
 ```
-cd SWAP
+cd SWAP_Universal
 pip install -r requirements.txt
 ```
 * Calculate the correlation between SWAP-Score and ground-truth CIFAR-10 performance of 1000 CNNs.
