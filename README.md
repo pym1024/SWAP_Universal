@@ -1,5 +1,5 @@
-# Sample-Wise Activation Patterns for Ultra-Fast NAS <br/> (ICLR 2024 Spotlight)
-Training-free metrics (a.k.a. zero-cost proxies) are widely used to avoid resource-intensive neural network training, especially in Neural Architecture Search (NAS). Recent studies show that existing training-free metrics have several limitations, such as limited correlation and poor generalisation across different search spaces and tasks. Hence, we propose Sample-Wise Activation Patterns and its derivative, SWAP-Score, a novel high-performance training-free metric. It measures the expressivity of networks over a batch of input samples. The SWAP-Score is strongly correlated with ground-truth performance across various search spaces and tasks, outperforming 15 existing training-free metrics on NAS-Bench-101/201/301 and TransNAS-Bench-101.
+# Zero-Shot Neural Network Evaluation with Sample-Wise Activation Patterns <br/>
+Zero-shot proxies, also known as training-free metrics, are widely adopted to reduce the computational overhead in neural network evaluation. Existing zero-shot metrics have several limitations, including weak correlation with the true performance and poor generalisation across different networks or downstream tasks. For example, most of these metrics apply only to either convolutional neural networks (CNNs) or Transformers, but not both. To address these limitations, we propose Sample-Wise Activation Patterns (SWAP), and its derivative, SWAP-Score, a novel, universal, and highly effective zero-shot metric. This metric measures the expressivity of neural networks over a mini-batch of samples, showing a high correlation with the neural networks' ground-truth performance. For both CNNs and Transformers, the SWAP-Score outperforms existing zero-shot metrics across computer vision and natural language processing tasks. For instance, Spearman's correlation coefficient between the SWAP-Score and CIFAR-10 validation accuracy for DARTS CNNs is 0.93, and 0.71 for FlexiBERT Transformers on GLUE tasks. Moreover, SWAP-Score is label-independent, hence can be applied at the pre-training stage of language models to estimate their performance for downstream tasks.
 
 # Usage
 
@@ -7,27 +7,21 @@ The following instruction demonstrates the usage of evaluating network's perform
 
 **/src/metrics/swap.py** contains the core components of SWAP-Score. 
 
-**/datasets/DARTS_archs_CIFAR10.csv** contains 1000 architectures (randomly sampled from DARTS space) along with their CIFAR-10 validation accuracies (trained for 200 epochs).
+**/datasets/DARTS_archs_CIFAR10.csv** contains 1000 CNNs along with their CIFAR-10 performance (trained for 200 epochs).
+
+**/datasets/BERT_benchmark.json** contains 500 BERT-like Transformers along with their GLUE performance.
 
 * Install necessary dependencies (a new virtual environment is suggested).
 ```
 cd SWAP
 pip install -r requirements.txt
 ```
-* Calculate the correlation between SWAP-Score and CIFAR-10 validation accuracies of 1000 DARTS architectures.
+* Calculate the correlation between SWAP-Score and ground-truth CIFAR-10 performance of 1000 CNNs.
 ```
-python correlation.py
+python SWAP_CNN.py
 ```
 
-
-If you use or build on our code, please consider citing our paper:
+* Calculate the correlation between SWAP-Score and ground-truth GLUE performance of 500 BERT-like Transformers.
 ```
-@inproceedings{
-peng2024swapnas,
-title={{SWAP}-{NAS}: Sample-Wise Activation Patterns for Ultra-fast {NAS}},
-author={Yameng Peng and Andy Song and Haytham M. Fayek and Vic Ciesielski and Xiaojun Chang},
-booktitle={The Twelfth International Conference on Learning Representations},
-year={2024},
-url={https://openreview.net/forum?id=tveiUXU2aa}
-}
+python SWAP_Transformer.py
 ```
