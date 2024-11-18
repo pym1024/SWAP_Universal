@@ -40,9 +40,8 @@ if __name__ == "__main__":
 
     results = []
     
-    for index, i in arch_info.iterrows():
-        print(f'Evaluating network: {index}')
-
+    for index, i in tqdm(arch_info.iterrows(), total=arch_info.shape[0]):
+       
         network = Network(3, 10, 1, eval(i.genotype))
         network = network.to(device)
 

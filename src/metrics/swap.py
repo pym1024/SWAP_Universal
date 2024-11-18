@@ -26,15 +26,13 @@ class SampleWiseActivationPatterns(object):
         if self.activations is None:
             self.activations = torch.zeros(n_sample, n_neuron).to(self.device)  
 
-        # self.activations = torch.sign(activations)
-        self.activations = nn.functional.threshold(activations, 0, 0)
-
+        self.activations = torch.sign(activations)
+        
     @torch.no_grad()
     def calSWAP(self, regular_factor):
         
         self.activations = self.activations.T # transpose the activation matrix: (samples, neurons) to (neurons, samples)
         self.swap = torch.unique(self.activations, dim=0).size(0)
-        # self.swap = self.activations.shape[0]
         
         del self.activations
         self.activations = None
