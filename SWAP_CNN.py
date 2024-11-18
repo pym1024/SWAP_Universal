@@ -10,6 +10,7 @@ from src.utils.utilities import *
 from src.metrics.swap import SWAP
 from src.datasets.utilities import get_datasets
 from src.search_space.networks import *
+from tqdm import tqdm
 
 # Settings for console outputs
 import warnings
